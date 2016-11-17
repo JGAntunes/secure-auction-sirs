@@ -1,0 +1,26 @@
+{
+  "name": "secure-auction-sirs",
+  "version": "0.1.0",
+  "description": "Project to SIRS class",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgantunes/secure-auction-sirs.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jgantunes/secure-auction-sirs/issues"
+  },
+  "homepage": "https://github.com/jgantunes/secure-auction-sirs#readme",
+  "dependencies": {
+    "hapi": "^15.2.0",
+    "inert": "^4.0.2",
+    "pug": "^2.0.0-beta6",
+    "vision": "^4.1.0"
+  }
+}
