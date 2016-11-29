@@ -22,10 +22,14 @@
   "dependencies": {
     "hapi": "^15.2.0",
     "inert": "^4.0.2",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
     "pug": "^2.0.0-beta6",
+    "sequelize": "^3.27.0",
     "vision": "^4.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "standard": "^8.6.0"
   }
 }

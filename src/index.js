@@ -2,6 +2,7 @@
 const Hapi = require('hapi')
 const config = require('../config')
 const path = require('path')
+const db = require('./db')
 
 const server = new Hapi.Server({
   // Get error logs from the pug compiler
