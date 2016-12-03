@@ -33,7 +33,9 @@ server.register([
   // Register our plugins
   {register: require('./plugins/methods')},
   {register: require('./plugins/assets')},
-  {register: require('./plugins/views/item')}
+  {register: require('./plugins/views/item')},
+  // {register: require('./plugins/views/misc')},
+  {register: require('./plugins/views/user')}
 ], (err) => {
   if (err) throw err
 
