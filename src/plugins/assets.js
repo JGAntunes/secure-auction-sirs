@@ -1,16 +1,5 @@
 
-const Boom = require('boom')
-
 function register (server, options = {}, next) {
-
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-      return reply.view('home.pug')
-    }
-  })
-
   server.route({
     method: 'GET',
     path: '/public/{p*}',
@@ -27,7 +16,7 @@ function register (server, options = {}, next) {
 }
 
 register.attributes = {
-  name: 'views',
+  name: 'assets',
   version: '1.0.0'
 }
 

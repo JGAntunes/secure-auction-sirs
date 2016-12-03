@@ -2,6 +2,7 @@
 const Hapi = require('hapi')
 const config = require('../config')
 const path = require('path')
+const log = require('./helpers/logger')
 const db = require('./db')
 
 const server = new Hapi.Server({
@@ -30,7 +31,9 @@ server.register([
   // Plugin to serve static files
   {register: require('inert')},
   // Register our plugins
-  {register: require('./plugins/views')}
+  {register: require('./plugins/methods')},
+  {register: require('./plugins/assets')},
+  {register: require('./plugins/views/item')}
 ], (err) => {
   if (err) throw err
 
@@ -48,6 +51,8 @@ server.register([
   // Start the server
   server.start((err) => {
     if (err) throw err
-    console.log(`Server running at: ${server.info.uri}`)
+    log.error(`Server running at: ${server.info.uri}`)
   })
 })
+
+module.exports = server

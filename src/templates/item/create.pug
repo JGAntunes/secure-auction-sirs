@@ -1,0 +1,22 @@
+extends ../layout.pug
+
+block body
+  h2(class="main-title") Create new Iem
+  form(method="POST")
+    div(class="form-group row")
+      label(for="name" class="col-xs-2 col-form-label") Name
+      div(class="col-xs-10")
+        input(class="form-control" type="text" name="name" id="name")
+    div(class="form-group row")
+      label(for="description" class="col-xs-2 col-form-label") Description
+      div(class="col-xs-10")
+        input(class="form-control" type="text" name="description" id="description")
+    div(class="form-group row")
+      label(for="img" class="col-xs-2 col-form-label") Image
+      div(class="col-xs-10")
+        input(class="form-control" type="text" name="img" id="img")
+    div(class="form-group row")
+      label(for="value" class="col-xs-2 col-form-label") Minimum value
+      div(class="col-xs-10")
+        input(class="form-control" type="text" name="minValue" id="minValue")
+    button(type="submit" class="btn btn-primary") Submit

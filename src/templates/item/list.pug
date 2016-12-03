@@ -1,0 +1,20 @@
+extends ../layout.pug
+
+block body
+  h1 Safe Auction SIRS
+
+  table(class="table table-striped table-inverse")
+    thead
+      tr
+        th Id
+        th Name
+        th Description
+        th Created
+    tbody
+      each item in items
+        tr
+          th
+            a(href=`/items/${item.id}`)=item.id
+          th= item.name
+          th= item.description
+          th= item.createdAt

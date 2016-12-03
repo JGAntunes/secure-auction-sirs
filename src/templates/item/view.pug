@@ -1,0 +1,10 @@
+extends ../layout.pug
+
+block body
+  div(class="row")
+    h1(class="main-title")= item.name
+  div(class="row")
+    div(class="col-md-4")
+      img(src=item.img)
+    div(class="col-md-6")
+      p= item.description
