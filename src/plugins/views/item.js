@@ -59,10 +59,44 @@ function register (server, options = {}, next) {
         params: {id: Joi.string().required()}
       },
       pre: [
-        { method: 'item.get(params.id)', assign: 'item' }
+        { method: 'item.get(params.id)', assign: 'item' },
+        { method: function (request, reply) {
+          const item = request.params.id
+          server.methods.bid.list({item}, {user: true}, reply)
+        }, assign: 'bids' }
       ],
       handler: function (request, reply) {
-        return reply.view('item/view.pug', {item: request.pre.item})
+        return reply.view('item/view.pug', {
+          item: request.pre.item,
+          bids: request.pre.bids
+        })
+      }
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/items/{id}/bid',
+    config: {
+      validate: {
+        params: {id: Joi.string().required()},
+        payload: {
+          value: Joi.number().required()
+        }
+      },
+      pre: [
+        { method: function (request, reply) {
+          server.methods.bid.create({
+            // TODO replace this hardcoded UUID
+            UserId: '7cc31fbf-cd77-4ddf-8a46-e39ff94b8101',
+            ItemId: request.params.id,
+            value: request.payload.value
+          }, reply)
+        }, assign: 'bid' }
+      ],
+      handler: function (request, reply) {
+        const item = request.params.id
+        return reply.redirect(`/items/${item}`)
       }
     }
   })

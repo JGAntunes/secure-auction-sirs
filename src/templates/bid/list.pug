@@ -1,0 +1,23 @@
+
+h1 Bids
+
+table(class="table table-striped table-inverse")
+  if bids && bids.length
+    thead
+      tr
+        if bids[0].User
+          th User
+        if bids[0].Item
+          th Item
+        th Value
+        th Created
+    tbody
+      each bid in bids
+        tr
+          if bid.User
+            th= bid.User.name
+          if bid.Item
+            th
+              a(href=`/items/${bid.Item.id}`)= bid.Item.name
+          th= bid.value
+          th= bid.createdAt

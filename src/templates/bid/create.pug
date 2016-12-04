@@ -1,0 +1,9 @@
+extends ../layout.pug
+
+block body
+  form(action=`/items/${item.id}/bid` method="POST" class="form-inline")
+    div(class="form-group row")
+      label(for="name" class="col-xs-2 col-form-label") Place bid
+      div(class="col-xs-10")
+        input(class="form-control" type="number" name="value" id="value")
+    button(type="submit" class="btn btn-primary") Submit

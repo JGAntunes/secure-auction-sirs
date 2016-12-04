@@ -45,10 +45,17 @@ function register (server, options = {}, next) {
         params: {id: Joi.string().required()}
       },
       pre: [
-        { method: 'user.get(params.id)', assign: 'user' }
+        { method: 'user.get(params.id)', assign: 'user' },
+        { method: function (request, reply) {
+          const user = request.params.id
+          server.methods.bid.list({user}, {item: true}, reply)
+        }, assign: 'bids' }
       ],
       handler: function (request, reply) {
-        return reply.view('user/view.pug', {user: request.pre.user})
+        return reply.view('user/view.pug', {
+          user: request.pre.user,
+          bids: request.pre.bids
+        })
       }
     }
   })
