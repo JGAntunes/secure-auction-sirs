@@ -6,13 +6,13 @@ block body
     div(class="form-group row")
       label(for="name" class="col-xs-2 col-form-label") Name
       div(class="col-xs-10")
-        input(class="form-control" type="text" name="name" id="name")
+        input(class="form-control" type="text" name="name" id="name" required)
     div(class="form-group row")
       label(for="description" class="col-xs-2 col-form-label") Email
       div(class="col-xs-10")
-        input(class="form-control" type="text" name="email" id="email")
+        input(class="form-control" type="email" name="email" id="email" required)
     div(class="form-group row")
       label(for="img" class="col-xs-2 col-form-label") Image
       div(class="col-xs-10")
-        input(class="form-control" type="text" name="img" id="img")
+        input(class="form-control" type="url" name="img" id="img" required)
     button(type="submit" class="btn btn-primary") Submit

@@ -31,14 +31,14 @@ function register (server, options = {}, next) {
       validate: {
         payload: {
           name: Joi.string().description('name of the item').required(),
-          description: Joi.string().description('description of the item'),
+          description: Joi.string().description('description of the item').required(),
           img: Joi.string().uri({
             scheme: [
               'http',
               'https'
             ]
           }).description('item image'),
-          minValue: Joi.number().default(1)
+          minValue: Joi.number().default(1).required()
         }
       },
       pre: [

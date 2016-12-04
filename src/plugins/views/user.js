@@ -18,7 +18,7 @@ function register (server, options = {}, next) {
       validate: {
         payload: {
           name: Joi.string().description('name of the user').required(),
-          email: Joi.string().email().description('email of the user'),
+          email: Joi.string().email().description('email of the user').required(),
           img: Joi.string().uri({
             scheme: [
               'http',
