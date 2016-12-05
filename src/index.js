@@ -21,6 +21,7 @@ const server = new Hapi.Server({
 })
 
 server.connection({
+  uri: config.uri,
   host: config.host,
   port: config.port
 })
@@ -34,7 +35,7 @@ server.register([
   {register: require('./plugins/methods')},
   {register: require('./plugins/assets')},
   {register: require('./plugins/views/item')},
-  // {register: require('./plugins/views/misc')},
+  {register: require('./plugins/views/login')},
   {register: require('./plugins/views/user')}
 ], (err) => {
   if (err) throw err

@@ -7,6 +7,7 @@ function register (server) {
   server.method('user.update', update)
   server.method('user.create', create)
   server.method('user.get', get)
+  server.method('user.getByEmail', getByEmail)
   server.method('user.list', list)
 }
 
@@ -36,6 +37,19 @@ function create (user, callback) {
 
 function get (userId, callback) {
   User.findById(userId)
+  .then((result) => {
+    return result
+      ? callback(result.toJSON())
+      : callback(Boom.notFound('user not found'))
+  })
+  .catch((err) => {
+    log.error({ err: err }, 'error getting user')
+    callback(Boom.internal())
+  })
+}
+
+function getByEmail (userEmail, callback) {
+  User.findOne({ where: {email: userEmail} })
   .then((result) => {
     return result
       ? callback(result.toJSON())

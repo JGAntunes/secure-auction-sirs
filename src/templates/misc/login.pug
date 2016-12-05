@@ -1,0 +1,14 @@
+extends ../layout.pug
+
+block body
+  div(class="row")
+    h1(class="main-title") Login
+  div(class="row")
+    div(class="col-xs-6 col-xs-offset-3")
+      form(action=`/login` method="POST")
+        div(class="form-group row")
+          label(for="name" class="col-xs-2 col-form-label") Email
+          div(class="col-xs-10")
+            input(class="form-control" type="text" name="email" id="email")
+        div(class="col-xs-12 col-xs-offset-10")
+          button(type="submit" class="btn btn-primary") Submit
