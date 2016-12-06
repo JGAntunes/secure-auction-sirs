@@ -1,4 +1,5 @@
 const Boom = require('boom')
+const sequelize = require('../helpers/db')
 const log = require('../helpers/logger')
 const Bid = require('../db/bid')
 const Item = require('../db/item')
@@ -14,10 +15,21 @@ function register (server) {
 module.exports = register
 
 function create (bid, callback) {
-  Bid.create(bid)
+  sequelize.transaction((t) => {
+    return Bid.findOne({
+      where: {
+        value: {$gte: bid.value}
+      },
+      transaction: t
+    })
+    .then((result) => {
+      if (result) throw new Error('Value is smaller than highest bid')
+      return Bid.create(bid, {transaction: t})
+    })
+  })
   .then(result => callback(null, result.toJSON()))
   .catch((err) => {
-    log.error({ err: err }, 'error creating bid')
+    log.error(err, 'error creating bid')
     callback(Boom.internal())
   })
 }
@@ -30,7 +42,7 @@ function get (bidId, callback) {
       : callback(Boom.notFound('bid not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error getting bid')
+    log.error(err, 'error getting bid')
     callback(Boom.internal())
   })
 }
@@ -44,11 +56,12 @@ function list (query, options = {}, callback = options) {
   if (options.item) include.push({ model: Item, required: true })
   Bid.findAll({
     where,
-    include
+    include,
+    order: 'value DESC'
   })
   .then(result => callback(null, result))
   .catch((err) => {
-    log.error({ err: err }, 'error getting bids')
+    log.error(err, 'error getting bids')
     callback(Boom.internal())
   })
 }

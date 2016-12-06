@@ -24,7 +24,7 @@ function create (userId, callback) {
     })
     .then(result => callback(null, result.toJSON()))
     .catch((err) => {
-      log.error({ err: err }, 'error creating session token')
+      log.error(err, 'error creating session token')
       callback(Boom.internal())
     })
   })
@@ -45,7 +45,7 @@ function validate (userId, token, callback) {
       : callback(Boom.unauthorized('invalid session token'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error session token')
+    log.error(err, 'error session token')
     callback(Boom.internal())
   })
 }
@@ -59,7 +59,7 @@ function remove (userId, token, callback) {
   })
   .then(result => callback(null, result))
   .catch((err) => {
-    log.error({ err: err }, 'error deleting session token')
+    log.error(err, 'error deleting session token')
     callback(Boom.internal())
   })
 }

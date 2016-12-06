@@ -21,7 +21,7 @@ function update (userId, newUser, callback) {
     : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error updating user')
+    log.error(err, 'error updating user')
     callback(Boom.internal())
   })
 }
@@ -30,7 +30,7 @@ function create (user, callback) {
   User.create(user)
   .then(result => callback(null, result.toJSON()))
   .catch((err) => {
-    log.error({ err: err }, 'error creating user')
+    log.error(err, 'error creating user')
     callback(Boom.internal())
   })
 }
@@ -43,7 +43,7 @@ function get (userId, callback) {
       : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error getting user')
+    log.error(err, 'error getting user')
     callback(Boom.internal())
   })
 }
@@ -56,7 +56,7 @@ function getByEmail (userEmail, callback) {
       : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error getting user')
+    log.error(err, 'error getting user')
     callback(Boom.internal())
   })
 }
@@ -65,7 +65,7 @@ function list (callback) {
   User.findAll()
   .then(result => callback(null, result))
   .catch((err) => {
-    log.error({ err: err }, 'error getting user')
+    log.error(err, 'error getting user')
     callback(Boom.internal())
   })
 }

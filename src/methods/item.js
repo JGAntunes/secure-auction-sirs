@@ -20,7 +20,7 @@ function update (itemId, newItem, callback) {
     : callback(Boom.notFound('item not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error updating item')
+    log.error(err, 'error updating item')
     callback(Boom.internal())
   })
 }
@@ -29,7 +29,7 @@ function create (item, callback) {
   Item.create(item)
   .then(result => callback(null, result.toJSON()))
   .catch((err) => {
-    log.error({ err: err }, 'error creating item')
+    log.error(err, 'error creating item')
     callback(Boom.internal())
   })
 }
@@ -42,7 +42,7 @@ function get (itemId, callback) {
       : callback(Boom.notFound('item not found'))
   })
   .catch((err) => {
-    log.error({ err: err }, 'error getting item')
+    log.error(err, 'error getting item')
     callback(Boom.internal())
   })
 }
@@ -51,7 +51,7 @@ function list (callback) {
   Item.findAll()
   .then(result => callback(null, result))
   .catch((err) => {
-    log.error({ err: err }, 'error getting item')
+    log.error(err, 'error getting item')
     callback(Boom.internal())
   })
 }

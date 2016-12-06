@@ -87,7 +87,7 @@ function register (server, options = {}, next) {
       validate: {
         params: {id: Joi.string().required()},
         payload: {
-          value: Joi.number().required()
+          value: Joi.number().positive().required()
         }
       },
       pre: [
