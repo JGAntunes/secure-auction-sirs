@@ -47,7 +47,11 @@ function register (server, options = {}, next) {
         }
       },
       pre: [
-        { method: 'item.create(payload)', assign: 'item' }
+        { method: function (request, reply){
+          const userId = request.auth.credentials.UserId
+          const newItem = Object.assign({}, request.payload, {UserId: userId})
+          server.methods.item.create(newItem, reply)
+        }, assign: 'item' }
       ],
       handler: function (request, reply) {
         const item = request.pre.item
@@ -94,7 +98,7 @@ function register (server, options = {}, next) {
         { method: function (request, reply) {
           server.methods.bid.create({
             // TODO replace this hardcoded UUID
-            UserId: '7cc31fbf-cd77-4ddf-8a46-e39ff94b8101',
+            UserId: request.auth.credentials.UserId,
             ItemId: request.params.id,
             value: request.payload.value
           }, reply)
