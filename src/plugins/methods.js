@@ -3,6 +3,7 @@ const Item = require('../methods/item')
 const User = require('../methods/user')
 const Login = require('../methods/login')
 const Mail = require('../methods/mail')
+const Session = require('../methods/session')
 
 // Plugin responsible for resgistering all the server methods
 function register (server, options = {}, next) {
@@ -11,6 +12,7 @@ function register (server, options = {}, next) {
   User(server)
   Login(server)
   Mail(server)
+  Session(server)
   next()
 }
 

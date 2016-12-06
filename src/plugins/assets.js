@@ -3,11 +3,14 @@ function register (server, options = {}, next) {
   server.route({
     method: 'GET',
     path: '/public/{p*}',
-    handler: {
-      directory: {
-        path: '../public',
-        redirectToSlash: true,
-        index: true
+    config: {
+      auth: false,
+      handler: {
+        directory: {
+          path: '../public',
+          redirectToSlash: true,
+          index: true
+        }
       }
     }
   })

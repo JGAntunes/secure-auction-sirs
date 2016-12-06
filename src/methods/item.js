@@ -16,7 +16,7 @@ function update (itemId, newItem, callback) {
   Item.update(newItem, { where: {id: itemId}, return: true })
   .then(([affectedCount, affectedRows]) => {
     return affectedCount > 0
-    ? callback(affectedRows[0].toJSON())
+    ? callback(null, affectedRows[0].toJSON())
     : callback(Boom.notFound('item not found'))
   })
   .catch((err) => {
@@ -27,7 +27,7 @@ function update (itemId, newItem, callback) {
 
 function create (item, callback) {
   Item.create(item)
-  .then(result => callback(result.toJSON()))
+  .then(result => callback(null, result.toJSON()))
   .catch((err) => {
     log.error({ err: err }, 'error creating item')
     callback(Boom.internal())
@@ -38,7 +38,7 @@ function get (itemId, callback) {
   Item.findById(itemId)
   .then((result) => {
     return result
-      ? callback(result.toJSON())
+      ? callback(null, result.toJSON())
       : callback(Boom.notFound('item not found'))
   })
   .catch((err) => {

@@ -17,7 +17,7 @@ function update (userId, newUser, callback) {
   User.update(newUser, { where: {id: userId}, return: true })
   .then(([affectedCount, affectedRows]) => {
     return affectedCount > 0
-    ? callback(affectedRows[0].toJSON())
+    ? callback(null, affectedRows[0].toJSON())
     : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {
@@ -28,7 +28,7 @@ function update (userId, newUser, callback) {
 
 function create (user, callback) {
   User.create(user)
-  .then(result => callback(result.toJSON()))
+  .then(result => callback(null, result.toJSON()))
   .catch((err) => {
     log.error({ err: err }, 'error creating user')
     callback(Boom.internal())
@@ -39,7 +39,7 @@ function get (userId, callback) {
   User.findById(userId)
   .then((result) => {
     return result
-      ? callback(result.toJSON())
+      ? callback(null, result.toJSON())
       : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {
@@ -52,7 +52,7 @@ function getByEmail (userEmail, callback) {
   User.findOne({ where: {email: userEmail} })
   .then((result) => {
     return result
-      ? callback(result.toJSON())
+      ? callback(null, result.toJSON())
       : callback(Boom.notFound('user not found'))
   })
   .catch((err) => {

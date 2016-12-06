@@ -15,7 +15,7 @@ module.exports = register
 
 function create (bid, callback) {
   Bid.create(bid)
-  .then(result => callback(result.toJSON()))
+  .then(result => callback(null, result.toJSON()))
   .catch((err) => {
     log.error({ err: err }, 'error creating bid')
     callback(Boom.internal())
@@ -26,7 +26,7 @@ function get (bidId, callback) {
   Bid.findById(bidId)
   .then((result) => {
     return result
-      ? callback(result.toJSON())
+      ? callback(null, result.toJSON())
       : callback(Boom.notFound('bid not found'))
   })
   .catch((err) => {

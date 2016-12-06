@@ -19,6 +19,14 @@ const config = {
   },
   loginCodes: {
     ttl: process.env.SIRS_LOGIN_CODES_TTL || 5 // Time to live in minutes
+  },
+  sessions: {
+    ttl: process.env.SIRS_SESSIONS_TTL || 5 * 60 * 60 * 1000, // Time to live in ms
+    password: process.env.SIRS_SESSIONS_PASSWORD || 'THIS NEEDS TO BE A LONG STRING WITH MIN 32 CHARS',
+    cookie: process.env.SIRS_SESSIONS_COOKIE_NAME || 'session', // Session cookie name
+    redirectTo: '/login',
+    isSecure: process.env.SIRS_SESSIONS_IS_SECURE || false
+    // domain: process.env.SIRS_SESSIONS_DOMAIN
   }
 }
 

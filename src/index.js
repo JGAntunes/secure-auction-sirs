@@ -31,9 +31,12 @@ server.register([
   {register: require('vision')},
   // Plugin to serve static files
   {register: require('inert')},
+  // Plugin to manage session cookies
+  {register: require('hapi-auth-cookie')},
   // Register our plugins
   {register: require('./plugins/methods')},
   {register: require('./plugins/assets')},
+  {register: require('./plugins/auth')},
   {register: require('./plugins/views/item')},
   {register: require('./plugins/views/login')},
   {register: require('./plugins/views/user')}

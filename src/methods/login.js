@@ -21,7 +21,7 @@ function createCode (userId, callback) {
       UserId: userId,
       code: token
     })
-    .then(result => callback(result.toJSON()))
+    .then(result => callback(null, result.toJSON()))
     .catch((err) => {
       log.error({ err: err }, 'error creating login code')
       callback(Boom.internal())
@@ -39,7 +39,7 @@ function validateCode (loginCode, callback) {
   })
   .then((result) => {
     return result
-      ? callback(result.toJSON())
+      ? callback(null, result.toJSON())
       : callback(Boom.unauthorized('user not found'))
   })
   .catch((err) => {

@@ -5,8 +5,11 @@ function register (server, options = {}, next) {
     method: 'GET',
     path: '/login',
     config: {
+      auth: false,
       handler: function (request, reply) {
-        return reply.view('misc/login.pug')
+        return reply.view('misc/login.pug', {
+          me: request.auth.credentials
+        })
       }
     }
   })
@@ -15,6 +18,7 @@ function register (server, options = {}, next) {
     method: 'GET',
     path: '/login/{code}',
     config: {
+      auth: false,
       validate: {
         params: {
           code: Joi.string().required()
@@ -23,14 +27,33 @@ function register (server, options = {}, next) {
       pre: [
         { method: 'login.validateCode(params.code)', assign: 'loginCode' },
         { method: function (request, reply) {
-          console.log(request.pre.loginCode.UserId)
           const userId = request.pre.loginCode.UserId
           server.methods.user.get(userId, reply)
-        }, assign: 'user' }
+        }, assign: 'user' },
+        { method: 'session.create(pre.user.id)', assign: 'session'}
       ],
       handler: function (request, reply) {
         const userId = request.pre.user.id
+        const token = request.pre.session.token
+        request.cookieAuth.set({
+          userId: userId,
+          token: token
+        })
         return reply().redirect(`/users/${userId}`)
+      }
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/logout',
+    config: {
+      pre: [
+        { method: 'session.remove(auth.credentials.UserId, auth.credentials.token)' }
+      ],
+      handler: function (request, reply) {
+        request.cookieAuth.clear()
+        return reply().redirect('/login')
       }
     }
   })
@@ -39,6 +62,7 @@ function register (server, options = {}, next) {
     method: 'POST',
     path: '/login',
     config: {
+      auth: false,
       validate: {
         payload: {
           email: Joi.string().email().required()
@@ -54,7 +78,9 @@ function register (server, options = {}, next) {
         }, assign: 'mail' }
       ],
       handler: function (request, reply) {
-        return reply.view('misc/login-success.pug')
+        return reply.view('misc/login-success.pug', {
+          me: request.auth.credentials
+        })
       }
     }
   })

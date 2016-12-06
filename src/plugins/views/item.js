@@ -9,7 +9,10 @@ function register (server, options = {}, next) {
         { method: 'item.list()', assign: 'items' }
       ],
       handler: function (request, reply) {
-        return reply.view('item/list.pug', { items: request.pre.items })
+        return reply.view('item/list.pug', {
+          me: request.auth.credentials,
+          items: request.pre.items
+        })
       }
     }
   })
@@ -19,7 +22,9 @@ function register (server, options = {}, next) {
     path: '/items/new',
     config: {
       handler: function (request, reply) {
-        return reply.view('item/create.pug')
+        return reply.view('item/create.pug', {
+          me: request.auth.credentials
+        })
       }
     }
   })
@@ -67,6 +72,7 @@ function register (server, options = {}, next) {
       ],
       handler: function (request, reply) {
         return reply.view('item/view.pug', {
+          me: request.auth.credentials,
           item: request.pre.item,
           bids: request.pre.bids
         })

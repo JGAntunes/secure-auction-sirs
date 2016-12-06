@@ -5,8 +5,11 @@ function register (server, options = {}, next) {
     method: 'GET',
     path: '/users/new',
     config: {
+      auth: false,
       handler: function (request, reply) {
-        return reply.view('user/create.pug')
+        return reply.view('user/create.pug', {
+          me: request.auth.credentials
+        })
       }
     }
   })
@@ -15,6 +18,7 @@ function register (server, options = {}, next) {
     method: 'POST',
     path: '/users/new',
     config: {
+      auth: false,
       validate: {
         payload: {
           name: Joi.string().description('name of the user').required(),
@@ -53,6 +57,7 @@ function register (server, options = {}, next) {
       ],
       handler: function (request, reply) {
         return reply.view('user/view.pug', {
+          me: request.auth.credentials,
           user: request.pre.user,
           bids: request.pre.bids
         })
