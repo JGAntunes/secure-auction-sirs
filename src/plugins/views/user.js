@@ -46,7 +46,12 @@ function register (server, options = {}, next) {
     path: '/users/{id}',
     config: {
       validate: {
-        params: {id: Joi.string().required()}
+        params: {id: Joi.string().guid({
+          version: [
+            'uuidv4',
+            'uuidv5'
+          ]
+        }).required()}
       },
       pre: [
         { method: 'user.get(params.id)', assign: 'user' },

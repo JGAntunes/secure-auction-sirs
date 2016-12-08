@@ -65,7 +65,12 @@ function register (server, options = {}, next) {
     path: '/items/{id}',
     config: {
       validate: {
-        params: {id: Joi.string().required()}
+        params: {id: Joi.string().guid({
+          version: [
+            'uuidv4',
+            'uuidv5'
+          ]
+        }).required()}
       },
       pre: [
         { method: 'item.get(params.id)', assign: 'item' },
@@ -89,7 +94,12 @@ function register (server, options = {}, next) {
     path: '/items/{id}/bid',
     config: {
       validate: {
-        params: {id: Joi.string().required()},
+        params: {id: Joi.string().guid({
+          version: [
+            'uuidv4',
+            'uuidv5'
+          ]
+        }).required()},
         payload: {
           value: Joi.number().positive().required()
         }
