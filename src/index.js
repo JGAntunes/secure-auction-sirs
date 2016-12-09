@@ -39,6 +39,7 @@ server.register([
   {register: require('./plugins/auth')},
   {register: require('./plugins/views/item')},
   {register: require('./plugins/views/login')},
+  {register: require('./plugins/views/payment')},
   {register: require('./plugins/views/user')}
 ], (err) => {
   if (err) throw err
