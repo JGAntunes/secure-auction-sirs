@@ -8,8 +8,11 @@ function register (server, options = {}, next) {
       validate: {
         params: {code: Joi.string().required()}
       },
+      pre: [
+        { method: 'payment.validate(auth.credentials.UserId, params.code)', assign: 'payment' }
+      ],
       handler: function (request, reply) {
-        return reply.view('payment/payment.pug', {
+        return reply.view('payment/view.pug', {
           me: request.auth.credentials
         })
       }
@@ -21,10 +24,20 @@ function register (server, options = {}, next) {
     path: '/payments/{code}',
     config: {
       validate: {
-        params: {code: Joi.string().required()}
+        params: {code: Joi.string().required()},
+        payload: {
+          num: Joi.string().creditCard().required(),
+          cvv: Joi.string().max(3).required(),
+          expDate: Joi.date().min((new Date()).setMonth(new Date().getMonth() - 1)).required(),
+          name: Joi.string().required()
+        }
       },
+      pre: [
+        // Mock some special payment request to a 3rd party service,
+        { method: 'payment.remove(auth.credentials.UserId, params.code)', assign: 'payment' }
+      ],
       handler: function (request, reply) {
-        return reply.view('payment/payment.pug', {
+        return reply.view('payment/view.pug', {
           me: request.auth.credentials
         })
       }

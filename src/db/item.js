@@ -6,7 +6,9 @@ const Item = sequelize.define('Item', {
   name: { type: Sequelize.STRING, allowNull: false },
   description: { type: Sequelize.STRING },
   img: { type: Sequelize.STRING, validate: {isUrl: true} },
-  minValue: { type: Sequelize.FLOAT, allowNull: false }
+  minValue: { type: Sequelize.FLOAT, allowNull: false },
+  closed: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false },
+  sentEmail: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false }
 }, {
   indexes: [
     { fields: ['UserId'] }

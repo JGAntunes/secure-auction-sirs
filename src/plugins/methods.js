@@ -4,6 +4,7 @@ const User = require('../methods/user')
 const Login = require('../methods/login')
 const Mail = require('../methods/mail')
 const Session = require('../methods/session')
+const Payment = require('../methods/payment')
 
 // Plugin responsible for resgistering all the server methods
 function register (server, options = {}, next) {
@@ -13,6 +14,7 @@ function register (server, options = {}, next) {
   Login(server)
   Mail(server)
   Session(server)
+  Payment(server)
   next()
 }
 

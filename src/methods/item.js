@@ -1,6 +1,10 @@
 const Boom = require('boom')
+const config = require('../../config')
 const log = require('../helpers/logger')
+const sequelize = require('../helpers/db')
 const Item = require('../db/item')
+const Bid = require('../db/bid')
+const User = require('../db/user')
 
 // Exported function responsible for registering the server methods
 function register (server) {
@@ -8,6 +12,8 @@ function register (server) {
   server.method('item.create', create)
   server.method('item.get', get)
   server.method('item.list', list)
+  server.method('item.closeExpired', closeExpired)
+  server.method('item.getWinners', getWinners)
 }
 
 module.exports = register
@@ -52,6 +58,48 @@ function list (callback) {
   .then(result => callback(null, result))
   .catch((err) => {
     log.error(err, 'error getting item')
+    callback(Boom.internal())
+  })
+}
+
+function getWinners (callback) {
+  Bid.findAll({
+    group: ['Item.id'],
+    attributes: [
+      'Item.id', [sequelize.fn('MAX', sequelize.col('value')), 'max']
+    ],
+    where: {
+      '$Item.closed$': true,
+      '$Item.sentEmail$': false
+    },
+    include: [
+      {model: Item, required: true, attributes: []}
+    ],
+    raw: true
+  })
+  .then(result => callback(null, result))
+  .catch((err) => {
+    log.error(err, 'error getting top bids')
+    callback(Boom.internal())
+  })
+}
+
+function closeExpired (callback) {
+  const now = new Date()
+  Item.update({ closed: true }, {
+    where: {
+      closed: false,
+      createdAt: {$lt: new Date(now - config.auction.ttl)}
+    },
+    returning: true
+  })
+  .then(([affectedCount, affectedRows]) => {
+    return affectedCount > 0
+    ? callback(null, affectedRows.map(elem => elem.toJSON()))
+    : callback()
+  })
+  .catch((err) => {
+    log.error(err, 'error updating items')
     callback(Boom.internal())
   })
 }

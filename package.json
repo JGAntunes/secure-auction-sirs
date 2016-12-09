@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jgantunes/secure-auction-sirs#readme",
   "dependencies": {
+    "async": "^2.1.4",
     "boom": "^4.2.0",
     "bunyan": "^1.8.5",
     "hapi": "^15.2.0",

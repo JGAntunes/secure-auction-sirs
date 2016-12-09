@@ -6,17 +6,17 @@ block body
     div(class="form-group row")
       label(for="card_holder" class="col-xs-2 col-form-label") Card Holder
       div(class="col-xs-10")
-        input(class="form-control" type="text" name="card_holder" id="card_holder" required)
+        input(class="form-control" type="text" name="name" id="name" required)
     div(class="form-group row")
       label(for="cnn" class="col-xs-2 col-form-label") Credit Card Number
       div(class="col-xs-10")
-        input(class="form-control" type="number" name="cnn" id="cnn" required)
+        input(class="form-control" type="number" name="num" id="num" required)
     div(class="form-group row")
       label(for="cnn" class="col-xs-2 col-form-label") CVV
       div(class="col-xs-10")
-        input(class="form-control" type="number" name="cnn" id="cnn" required)
+        input(class="form-control" type="number" name="cvv" id="cvv" required)
     div(class="form-group row")
       label(for="expDate" class="col-xs-2 col-form-label") Expiration Date
       div(class="col-xs-10")
-        input(class="form-control" type="date" name="expDate" id="expDate")
+        input(class="form-control" type="month" min=(new Date()) name="expDate" id="expDate")
     button(type="submit" class="btn btn-primary") Submit

@@ -35,8 +35,10 @@ server.register([
   {register: require('hapi-auth-cookie')},
   // Register our plugins
   {register: require('./plugins/methods')},
+  {register: require('./plugins/itemCron')},
   {register: require('./plugins/assets')},
   {register: require('./plugins/auth')},
+  {register: require('./plugins/views/error')},
   {register: require('./plugins/views/item')},
   {register: require('./plugins/views/login')},
   {register: require('./plugins/views/payment')},

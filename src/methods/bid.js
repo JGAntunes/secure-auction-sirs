@@ -10,6 +10,7 @@ function register (server) {
   server.method('bid.create', create)
   server.method('bid.get', get)
   server.method('bid.list', list)
+  server.method('bid.getByValue', getByValue)
 }
 
 module.exports = register
@@ -52,6 +53,28 @@ function create (bid, callback) {
 
 function get (bidId, callback) {
   Bid.findById(bidId)
+  .then((result) => {
+    return result
+      ? callback(null, result.toJSON())
+      : callback(Boom.notFound('bid not found'))
+  })
+  .catch((err) => {
+    log.error(err, 'error getting bid')
+    callback(Boom.internal())
+  })
+}
+
+function getByValue (itemId, value, callback) {
+  Bid.findOne({
+    where: {
+      ItemId: itemId,
+      value: value
+    },
+    include: [
+      {model: User, required: true},
+      {model: Item, required: true}
+    ]
+  })
   .then((result) => {
     return result
       ? callback(null, result.toJSON())

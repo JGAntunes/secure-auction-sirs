@@ -74,7 +74,7 @@ function register (server, options = {}, next) {
         { method: function (request, reply) {
           const loginCode = request.pre.loginCode.code
           const user = request.pre.user
-          server.methods.mail.send(loginCode, user, reply)
+          server.methods.mail.send.login(loginCode, user, reply)
         }, assign: 'mail' }
       ],
       handler: function (request, reply) {
