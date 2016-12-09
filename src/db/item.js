@@ -7,6 +7,10 @@ const Item = sequelize.define('Item', {
   description: { type: Sequelize.STRING },
   img: { type: Sequelize.STRING, validate: {isUrl: true} },
   minValue: { type: Sequelize.FLOAT, allowNull: false }
+}, {
+  indexes: [
+    { fields: ['UserId'] }
+  ]
 })
 
 module.exports = Item
