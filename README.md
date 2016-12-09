@@ -22,10 +22,33 @@ sudo ufw enable
 then run firewall.sh
 ```
 
+#Creation of the ssl certificate
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+
+Now we need to fill out the prompts on the output files. The most important line is the one that requests the Common Name (e.g. server FQDN or YOUR name). You need to enter the domain name associated with your server or, more likely, your server's public IP address.
+
+While we are using OpenSSL, we should also create a strong Diffie-Hellman group, which is used in negotiating Perfect Forward Secrecy with clients.
+
+We can do this by typing:
+
+sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+Then we load the certificate on the frontend of the application.
+
+```
+
+
 # Run it
 ```
-npm install
-npm start
+create the databases:
+
+  sh create-db.sh
+
+then run:
+
+  npm install
+  npm start
 
 #then visit http://localhost://3000
 ```
