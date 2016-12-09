@@ -17,13 +17,18 @@ module.exports = register
 function create (bid, callback) {
   sequelize.transaction((t) => {
     return Promise.all([
+      // Can't bid if item belongs to user or value is lower than min
       Item.findOne({
         where: {
-          id: bid.ItemId,
-          minValue: {$gte: bid.value}
+          $or: [
+            { UserId: bid.UserId },
+            { minValue: {$gte: bid.value} }
+          ],
+          id: bid.ItemId
         },
         transaction: t
       }),
+      // Can't bid if value is lower than highest bid
       Bid.findOne({
         where: {
           ItemId: bid.ItemId,
@@ -33,7 +38,7 @@ function create (bid, callback) {
       })
     ])
     .then((result) => {
-      if (result[0]) throw new Error('Value is lower than minimum')
+      if (result[0]) throw new Error('Value lower than min or item belongs to user')
       if (result[1]) throw new Error('Value is lower than highest bid')
       return Bid.create(bid, {transaction: t})
     })
