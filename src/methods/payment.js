@@ -52,13 +52,11 @@ function validate (userId, token, callback) {
   })
 }
 
-function remove (userId, token, callback) {
+function remove (token, callback) {
   Payment.destroy({
     where: {
-      code: token,
-      '$Bid.UserId$': userId
-    },
-    include: [Bid]
+      code: token
+    }
   })
   .then(result => callback(null, result))
   .catch((err) => {

@@ -34,7 +34,8 @@ function register (server, options = {}, next) {
       },
       pre: [
         // Mock some special payment request to a 3rd party service,
-        { method: 'payment.remove(auth.credentials.UserId, params.code)', assign: 'payment' }
+        { method: 'payment.validate(auth.credentials.UserId, params.code)', assign: 'payment' },
+        { method: 'payment.remove(params.code)', assign: 'deletedPayment' }
       ],
       handler: function (request, reply) {
         return reply.view('payment/view.pug', {
