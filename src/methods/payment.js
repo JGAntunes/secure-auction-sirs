@@ -37,7 +37,7 @@ function validate (userId, token, callback) {
     where: {
       code: token,
       createdAt: {$gt: new Date(now - config.paymentCode.ttl)},
-      '$Bid.UserId': userId
+      '$Bid.UserId$': userId
     },
     include: [Bid]
   })
@@ -56,7 +56,7 @@ function remove (userId, token, callback) {
   Payment.destroy({
     where: {
       code: token,
-      '$Bid.UserId': userId
+      '$Bid.UserId$': userId
     },
     include: [Bid]
   })

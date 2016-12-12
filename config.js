@@ -20,7 +20,7 @@ const config = {
   loginCodes: {
     ttl: process.env.SIRS_LOGIN_CODES_TTL || 5 // Time to live in minutes
   },
-  paymentCodes: {
+  paymentCode: {
     ttl: process.env.SIRS_PAYMENT_CODES_TTL || 48 * 60 * 60 * 1000 // Time to live in ms
   },
   auction: {

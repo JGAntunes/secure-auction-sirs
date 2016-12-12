@@ -19,7 +19,7 @@ function register (server) {
 module.exports = register
 
 function update (itemId, newItem, callback) {
-  Item.update(newItem, { where: {id: itemId}, return: true })
+  Item.update(newItem, { where: {id: itemId}, returning: true })
   .then(([affectedCount, affectedRows]) => {
     return affectedCount > 0
     ? callback(null, affectedRows[0].toJSON())
